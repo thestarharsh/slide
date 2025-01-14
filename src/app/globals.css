@@ -172,3 +172,8 @@
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
+
+.bg-dot-pattern {
+  background-image: radial-gradient(circle, #3b82f6 1px, transparent 1px);
+  background-size: 24px 24px;
+}
