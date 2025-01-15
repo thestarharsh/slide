@@ -56,12 +56,27 @@ export default function Home() {
                   className="object-contain"
                 />
               </div>
-              <nav className="hidden space-x-6 text-sm text-blue-200 md:block">
-                <Link href="#features">Features</Link>
-                <Link href="#pricing">Pricing</Link>
-                <Link href="#about">About</Link>
+              <nav className="hidden space-x-6 text-sm md:block">
+                <Link
+                  href="#features"
+                  className="text-white hover:text-violet-500 dark:hover:text-violet-500"
+                >
+                  Features
+                </Link>
+                <Link
+                  href="#pricing"
+                  className="text-white hover:text-violet-500 dark:hover:text-violet-500"
+                >
+                  Pricing
+                </Link>
+                <Link
+                  href="#about"
+                  className="text-white hover:text-violet-500 dark:hover:text-violet-500"
+                >
+                  About
+                </Link>
               </nav>
-              <Button className="bg-white text-primary hover:bg-violet-100">
+              <Button className="bg-white text-black hover:bg-violet-100 dark:bg-black dark:text-white dark:hover:bg-violet-500">
                 <Link href="/dashboard">Login</Link>
               </Button>
             </div>
@@ -76,22 +91,6 @@ export default function Home() {
                 audience. By automating responses convert conversations into
                 valuable business opportunities.
               </p>
-
-              <div className="mt-8 flex justify-center gap-4">
-                <Button
-                  size="lg"
-                  className="bg-blue-600 text-white hover:bg-blue-700"
-                >
-                  Get Started
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="border-blue-400 hover:bg-blue-50"
-                >
-                  Learn More
-                </Button>
-              </div>
             </div>
             <div className="relative h-40 md:h-80 w-full mt-10">
               <Image
