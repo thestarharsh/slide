@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu, Search } from "lucide-react";
+import { Menu } from "lucide-react";
 import Image from "next/image";
 
 import { PAGE_BREAD_CRUMBS } from "@/constants/pages";
@@ -9,12 +9,15 @@ import { HelpDuoToneWhite } from "@/icons";
 
 import { Separator } from "@/components/ui/separator";
 
+import Notifications from "./notifications";
+import Search from "./search";
 import ClerkAuthState from "../clerk-auth-state";
 import Sheet from "../sheet";
 import CreateAutomation from "../create-automation";
 import Items from "../sidebar/items";
 import UpgradeCard from "../sidebar/upgrade";
-import { SubscriptionPlan } from "../subscription-plan";
+import MainBreadcrumbs from "../breadcrumbs/main-breadcrumbs";
+import SubscriptionPlan from "../subscription-plan";
 
 type NavbarProps = {
   slug: string;
@@ -66,9 +69,14 @@ const Navbar = ({ slug }: NavbarProps) => {
               </div>
             </Sheet>
           </span>
-          <Search className="mt-2.5"/>
+          <Search />
           <CreateAutomation />
+          <Notifications />
         </div>
+        <MainBreadcrumbs 
+          page={page === slug ? "Home" : page}
+          slug={slug}
+        />
       </div>
     )
   );

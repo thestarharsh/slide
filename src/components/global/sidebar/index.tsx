@@ -10,7 +10,7 @@ import { Separator } from "@/components/ui/separator";
 import Items from "./items";
 import UpgradeCard from "./upgrade";
 import ClerkAuthState from "../clerk-auth-state";
-import { SubscriptionPlan } from "../subscription-plan";
+import SubscriptionPlan from "../subscription-plan";
 
 type SidebarProps = {
   slug: string;

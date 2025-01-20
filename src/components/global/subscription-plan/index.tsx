@@ -5,6 +5,8 @@ type SubscriptionPlanProps = {
     children: ReactNode;
 };
 
-export const SubscriptionPlan = ({ type, children}: SubscriptionPlanProps) => {
+const SubscriptionPlan = ({ type, children}: SubscriptionPlanProps) => {
     return children;
 };
+
+export default SubscriptionPlan;
