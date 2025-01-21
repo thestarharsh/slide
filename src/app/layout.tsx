@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { Toaster} from "sonner";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans, Geist_Mono } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 
 import { ThemeProvider } from "@/providers/theme-provider";
 
 import "./globals.css";
 
-const geistSans = Geist({
+const jakartaSans = Plus_Jakarta_Sans({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
@@ -32,7 +32,7 @@ export default function RootLayout({
       <html lang="en">
         <body
           suppressHydrationWarning
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          className={`${jakartaSans.variable} ${geistMono.variable} antialiased`}
         >
           <ThemeProvider
             attribute="class"
