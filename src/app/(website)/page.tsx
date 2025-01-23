@@ -11,8 +11,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { auth, currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
-export default function Home() {
+export default async function Home() {
+  const { userId } = await auth()
+  const user = await currentUser()
+  if (user && userId) {
+    const {firstName, lastName } = user;
+    redirect(`/dashboard/${firstName}-${lastName}`);
+  }  
+
   const plans = [
     {
       name: "Free Plan",
