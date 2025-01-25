@@ -16,8 +16,8 @@ const Items = ({ page, slug }: ItemsProps) => {
                 href={`/dashboard/${slug}/${item.label === "home" ? `/` : item.label}`}
                 className={cn(
                     "capitalize flex gap-x-2 rounded-full p-3",
-                    page === item.label && "bg-[#171515] border-2 border-gray-600",
-                    page === slug && item.label === "home" ? "bg-[#171717] border-2 border-gray-600" : "text-[#9a9b9f]"
+                    page === item.label && "bg-[#171515] border-2 border-[#3352CC]",
+                    page === slug && item.label === "home" ? "bg-[#171717] border-2 border-[#3352CC]" : "text-[#9a9b9f]"
                 )}
             >
                 {item.icon}
