@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import { CheckCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,16 +12,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { auth, currentUser } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
+import { onBoardUser } from "@/actions/user";
 
 export default async function Home() {
-  const { userId } = await auth()
-  const user = await currentUser()
-  if (user && userId) {
-    const {firstName, lastName } = user;
-    redirect(`/dashboard/${firstName}-${lastName}`);
-  }  
+  const user = await onBoardUser();
+  if (user.status === 200 || user.status === 201) {
+    return redirect(`dashboard/${user.data?.firstname}${user.data?.lastname}`);
+  }
 
   const plans = [
     {
