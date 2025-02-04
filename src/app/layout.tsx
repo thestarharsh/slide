@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { Toaster} from "sonner";
+import { Toaster } from "sonner";
 import { Plus_Jakarta_Sans, Geist_Mono } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 
+import { ReactQueryProvider } from "@/providers/react-query-provider";
 import { ThemeProvider } from "@/providers/theme-provider";
 
 import "./globals.css";
@@ -40,7 +41,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            {children}
+            <ReactQueryProvider>{children}</ReactQueryProvider>
             <Toaster />
           </ThemeProvider>
         </body>

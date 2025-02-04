@@ -1,9 +1,16 @@
 import { ReactNode } from "react";
-import { QueryClient } from "@tanstack/react-query";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 
 import Navbar from "@/components/global/navbar";
 import Sidebar from "@/components/global/sidebar";
-import { PrefetchUserProfile } from "@/react-query/prefetch";
+import {
+  PrefetchUserAutomations,
+  PrefetchUserProfile,
+} from "@/react-query/prefetch";
 
 type LayoutProps = {
   children: ReactNode;
@@ -14,12 +21,14 @@ const Layout = async ({ children, params }: LayoutProps) => {
   const { slug } = await params;
   const query = new QueryClient();
   await PrefetchUserProfile(query);
+  await PrefetchUserAutomations(query);
 
   return (
-    <div className="p-2">
-      <Sidebar slug={slug} />
-      <div
-        className="
+    <HydrationBoundary state={dehydrate(query)}>
+      <div className="p-2">
+        <Sidebar slug={slug} />
+        <div
+          className="
       lg:ml-[250px] 
       lg:pl-10 
       lg:py-5 
@@ -27,11 +36,12 @@ const Layout = async ({ children, params }: LayoutProps) => {
       flex-col 
       overflow-auto
       "
-      >
-        <Navbar slug={slug} />
-        {children}
+        >
+          <Navbar slug={slug} />
+          {children}
+        </div>
       </div>
-    </div>
+    </HydrationBoundary>
   );
 };
 
