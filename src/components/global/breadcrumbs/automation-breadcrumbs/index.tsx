@@ -15,7 +15,7 @@ type AutomationBreadcrumbsProps = {
 
 const AutomationBreadcrumbs = ({ id }: AutomationBreadcrumbsProps) => {
   const { data } = useQueryAutomation(id);
-  const { edit, enableEdit, disableEdit, inputRef, isPending } =
+  const { edit, enableEdit, inputRef, isPending } =
     useEditAutomation(id);
 
   const { latestVariable } = useMutationDataState(["update-automation"]);
