@@ -1,6 +1,5 @@
 "use server";
 
-import { redirect } from "next/navigation";
 import { currentUser } from "@clerk/nextjs/server";
 import { refreshToken } from "@/lib/fetch";
 
@@ -10,15 +9,13 @@ import { updateIntegration } from "../integrations/queries";
 
 export const onCurrentUser = async () => {
     const user = await currentUser();
-    if (!user) {
-        return redirect("/sign-in");
-    }
-
+    if (!user) return null;
     return user;
 };
 
 export const onBoardUser = async () => {
     const user = await onCurrentUser();
+    if (!user) return { status: 400, message: "No User Found" };
     try {
         const found = await findUser(user?.id);
         if (found) {

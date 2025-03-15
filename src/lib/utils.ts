@@ -27,3 +27,13 @@ export function getMonth(month: number) {
 
   return months[month - 1];
 };
+
+export const duplicateValidation = (arr: string[], el: string) => {
+  if (!arr.find((item) => item === el)) {
+    arr.push(el);
+  } else {
+    arr = arr.filter((item) => item !== el);
+  }
+
+  return arr;
+};
