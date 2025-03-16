@@ -4,6 +4,8 @@ import { Separator } from "@/components/ui/separator";
 import { useQueryAutomation } from "@/hooks/user-queries";
 import { PlaneBlue, SmartAi, Warning } from "@/icons";
 
+import PostButton from "../post";
+
 type ThenNodeProps = {
   id: string;
 };
@@ -30,15 +32,28 @@ const ThenNode = ({ id }: ThenNodeProps) => {
       </div>
       <div className="bg-background-80 flex flex-col rounded-xl p-3 gap-y-2">
         <div className="flex gap-x-2 items-center">
-            {data?.data?.listeners?.listener === "MESSAGE" ? <PlaneBlue /> : <SmartAi />}
-            <p className="font-semibold text-lg">
-                {data?.data?.listeners?.listener === "MESSAGE" ? "Send the user a message" : "Let the Smart AI handle it"}
-            </p>
+          {data?.data?.listeners?.listener === "MESSAGE" ? (
+            <PlaneBlue />
+          ) : (
+            <SmartAi />
+          )}
+          <p className="font-semibold text-lg">
+            {data?.data?.listeners?.listener === "MESSAGE"
+              ? "Send the user a message"
+              : "Let the Smart AI handle it"}
+          </p>
         </div>
         <p className="font-light text-text-secondary">
-            {data?.data?.listeners?.prompt}
+          {data?.data?.listeners?.prompt}
         </p>
       </div>
+      {data?.data?.posts?.length > 0 ? (
+        <></>
+      ) : commentTrigger ? (
+        <PostButton id={id} />
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

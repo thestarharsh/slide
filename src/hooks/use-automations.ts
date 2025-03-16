@@ -4,7 +4,7 @@ import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { z } from "zod";
 
-import { createAutomations, deleteKeyword, saveKeyword, saveListener, saveTrigger, updateAutomationName } from "@/actions/automations";
+import { createAutomations, deleteKeyword, saveKeyword, saveListener, savePosts, saveTrigger, updateAutomationName } from "@/actions/automations";
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { TRIGGER } from "@/redux/slices/automation";
 
@@ -140,4 +140,34 @@ export const useKeywords = (id: string) => {
         onKeyPress,
         onValueChange,
     };
+};
+
+export const useAutomationPosts = (id: string) => {
+    const [posts, setPosts] = useState<{
+        postid: string;
+        caption?: string;
+        media: string;
+        mediaType: "IMAGE" | "VIDEO" | "CAROUSEL_ALBUM";
+    }[]>([]);
+
+    const onSelectPost = (post: { 
+        postid: string; 
+        caption?: string; 
+        media: string; 
+        mediaType: "IMAGE" | "VIDEO" | "CAROUSEL_ALBUM"; 
+    }) => {
+        setPosts((prev) => {
+            const exists = prev.some((p) => p.postid === post.postid);
+            return exists ? prev.filter((p) => p.postid !== post.postid) : [...prev, post];
+        });
+    };    
+
+    const { mutate, isPending } = useMutationData(
+        ["attach-posts"],
+        () => savePosts(id, posts),
+        "automation-info",
+        () => setPosts([])
+    );
+
+    return { isPending, mutate, posts, onSelectPost };
 };
