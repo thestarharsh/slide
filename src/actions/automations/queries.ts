@@ -133,3 +133,31 @@ export const addTrigger = async (
         },
     });
 };
+
+export const addKeyword = async (
+    automationId: string,
+    keyword: string,
+) => {
+    return await client.automation.update({
+        where: {
+            id: automationId,
+        },
+        data: {
+            keywords: {
+                create: {
+                    word: keyword,
+                },
+            },
+        },
+    });
+};
+
+export const removeKeyword = async (
+    automationId: string
+) => {
+    return await client.keyword.delete({
+        where: {
+            id: automationId,
+        },
+    });
+};

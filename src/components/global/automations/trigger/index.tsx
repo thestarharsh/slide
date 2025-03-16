@@ -5,10 +5,11 @@ import { useTriggers } from "@/hooks/use-automations";
 import { AUTOMATION_TRIGGER } from "@/constants/automation";
 import { Separator } from "@/components/ui/separator";
 import ThenAction from "@/components/global/automations/then/then-action";
+import { cn } from "@/lib/utils";
 
 import ActiveTriggger from "./active";
+import Keywords from "./keywords";
 import TriggerButton from "../trigger-button";
-import { cn } from "@/lib/utils";
 
 type TriggerProps = {
   id: string;
@@ -16,7 +17,7 @@ type TriggerProps = {
 
 const Trigger = ({ id }: TriggerProps) => {
   const { data } = useQueryAutomation(id);
-  const {  onSetTrigger, types } = useTriggers(id);
+  const { onSetTrigger, types } = useTriggers(id);
 
   if (data?.data && data?.data?.trigger?.length) {
     return (
@@ -48,29 +49,28 @@ const Trigger = ({ id }: TriggerProps) => {
   }
 
   return (
-    <TriggerButton
-        label="Add Trigger"
-    >
-        <div className="flex flex-col gap-y-2">
-            {AUTOMATION_TRIGGER.map((trigger) => 
-                <div 
-                    key={trigger.id}
-                    onClick={() => onSetTrigger(trigger.type)}
-                    className={cn(
-                        "hover: opacity-80 text-white rounded-xl flex cursor-pointer flex-col p-3 gap-y-2",
-                        !types?.find((t) => t === trigger.type) ?
-                        "bg-background-80" :
-                        "bg-gradient-to-br from-[#3352CC] to-[#1C2D70] font-medium"
-                    )}
-                >
-                    <div className="flex gap-x-2 items-center">
-                        {trigger.icon}
-                        <p className="font-bold">{trigger.label}</p>
-                    </div>
-                    <p className="text-sm font-light">{trigger.description}</p>
-                </div>
+    <TriggerButton label="Add Trigger">
+      <div className="flex flex-col gap-y-2">
+        {AUTOMATION_TRIGGER.map((trigger) => (
+          <div
+            key={trigger.id}
+            onClick={() => onSetTrigger(trigger.type)}
+            className={cn(
+              "hover: opacity-80 text-white rounded-xl flex cursor-pointer flex-col p-3 gap-y-2",
+              !types?.find((t) => t === trigger.type)
+                ? "bg-background-80"
+                : "bg-gradient-to-br from-[#3352CC] to-[#1C2D70] font-medium"
             )}
-        </div>
+          >
+            <div className="flex gap-x-2 items-center">
+              {trigger.icon}
+              <p className="font-bold">{trigger.label}</p>
+            </div>
+            <p className="text-sm font-light">{trigger.description}</p>
+          </div>
+        ))}
+        <Keywords id={id}/>
+      </div>
     </TriggerButton>
   );
 };

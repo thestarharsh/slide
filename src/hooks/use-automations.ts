@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { z } from "zod";
 
-import { createAutomations, saveListener, saveTrigger, updateAutomationName } from "@/actions/automations";
+import { createAutomations, deleteKeyword, saveKeyword, saveListener, saveTrigger, updateAutomationName } from "@/actions/automations";
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { TRIGGER } from "@/redux/slices/automation";
 
@@ -108,5 +108,36 @@ export const useTriggers = (id: string) => {
         onSaveTrigger,
         onSetTrigger,
         types,
+    };
+};
+
+export const useKeywords = (id: string) => {
+    const [keyword, setKeyword] = useState("");
+    const onValueChange = (e: ChangeEvent<HTMLInputElement>) => setKeyword(e.target.value);
+
+    const { mutate } = useMutationData(
+        ["add-keyword"],
+        (data: { keyword: string }) => saveKeyword(id, data.keyword),
+        "automation-info",
+        () => setKeyword(""),
+    )
+    const onKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+            mutate({ keyword });
+            setKeyword("");
+        }
+    }
+
+    const { mutate: deleteMutation } = useMutationData(
+        ["delete-keyword"],
+        (data: { id: string }) => deleteKeyword(data.id),
+        "automation-info",
+    );
+
+    return {
+        deleteMutation,
+        keyword,
+        onKeyPress,
+        onValueChange,
     };
 };
