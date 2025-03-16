@@ -3,6 +3,7 @@ import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query
 import Trigger from "@/components/global/automations/trigger";
 import AutomationBreadcrumbs from "@/components/global/breadcrumbs/automation-breadcrumbs";
 import ThenNode from "@/components/global/automations/then/node";
+import PostNode from "@/components/global/automations/post/node";
 import { getAutomationInfo } from "@/actions/automations";
 import { PrefetchUserAutomation } from "@/react-query/prefetch";
 import { Warning } from "@/icons";
@@ -36,6 +37,7 @@ const AutomationIdPage = async ({ params }: AutomationIdPageProps) => {
           <Trigger id={id} />
         </div>
         <ThenNode id={id} />
+        <PostNode id={id} />
       </div>
     </HydrationBoundary>
   );
