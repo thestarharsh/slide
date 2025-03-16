@@ -21,7 +21,7 @@ const AutomationBreadcrumbs = ({ id }: AutomationBreadcrumbsProps) => {
   const { latestVariable } = useMutationDataState(["update-automation"]);
 
   return (
-    <div className="rounded-full w-full p-5 bg-[#18181B1A] flex items-center">
+    <div className="rounded-full w-full p-2 bg-[#18181B1A] flex items-center">
       <div className="flex items-center gap-x-1 min-w-0">
         <p className="text-[#9B9CA0] truncate">Automations</p>
         <ChevronRight className="flex-shrink-0" color="#3352CC" />

@@ -16,7 +16,7 @@ const PopOver = ({ children, className, trigger } : PopOverProps) => {
                 {trigger}
             </PopoverTrigger>
             <PopoverContent
-                className={cn("bg-[#1D1D1D] shadow-lg", className)}
+                className={cn("bg-[#1D1D1D] shadow-lg max-h-fit overflow-y-auto", className)}
                 align="end"
                 side="bottom"
             >

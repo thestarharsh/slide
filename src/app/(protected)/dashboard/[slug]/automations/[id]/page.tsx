@@ -2,9 +2,10 @@ import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query
 
 import Trigger from "@/components/global/automations/trigger";
 import AutomationBreadcrumbs from "@/components/global/breadcrumbs/automation-breadcrumbs";
+import ThenNode from "@/components/global/automations/then/node";
 import { getAutomationInfo } from "@/actions/automations";
-import { Warning } from "@/icons";
 import { PrefetchUserAutomation } from "@/react-query/prefetch";
+import { Warning } from "@/icons";
 
 type AutomationIdPageProps = {
   params: { id: string };
@@ -25,7 +26,7 @@ const AutomationIdPage = async ({ params }: AutomationIdPageProps) => {
 
   return (
     <HydrationBoundary state={dehydrate(query)}>
-      <div className=" flex flex-col items-center gap-y-20">
+      <div className=" flex flex-col items-center gap-y-8">
         <AutomationBreadcrumbs id={id} />
         <div className="w-full lg:w-10/12 xl:w-6/12 p-5 rounded-xl flex flex-col bg-[#1D1D1D] gap-y-3">
           <div className="flex gap-x-2">
@@ -34,6 +35,7 @@ const AutomationIdPage = async ({ params }: AutomationIdPageProps) => {
           </div>
           <Trigger id={id} />
         </div>
+        <ThenNode id={id} />
       </div>
     </HydrationBoundary>
   );

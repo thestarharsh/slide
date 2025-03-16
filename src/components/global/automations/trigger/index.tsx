@@ -1,5 +1,7 @@
 "use client";
 
+import Loader from "@/components/global/loader";
+import { Button } from "@/components/ui/button";
 import { useQueryAutomation } from "@/hooks/user-queries";
 import { useTriggers } from "@/hooks/use-automations";
 import { AUTOMATION_TRIGGER } from "@/constants/automation";
@@ -17,7 +19,7 @@ type TriggerProps = {
 
 const Trigger = ({ id }: TriggerProps) => {
   const { data } = useQueryAutomation(id);
-  const { onSetTrigger, types } = useTriggers(id);
+  const { isPending, onSaveTrigger, onSetTrigger, types } = useTriggers(id);
 
   if (data?.data && data?.data?.trigger?.length) {
     return (
@@ -70,6 +72,13 @@ const Trigger = ({ id }: TriggerProps) => {
           </div>
         ))}
         <Keywords id={id}/>
+        <Button 
+          onClick={onSaveTrigger}
+          disabled={types?.length === 0}
+          className="bg-gradient-to-br from-[#3352CC] to-[#1C2D70] text-white font-medium"
+        >
+          <Loader state={isPending}>Create Trigger</Loader>
+        </Button>
       </div>
     </TriggerButton>
   );

@@ -22,7 +22,7 @@ export const useZodForm = (
         },
     });
 
-    const onFormSubmit = handleSubmit(async (values) => mutation( ...values ));
+    const onFormSubmit = handleSubmit(async (values) => mutation(values));
     return {
         errors,
         onFormSubmit,
