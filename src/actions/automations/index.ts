@@ -152,10 +152,30 @@ export const savePosts = async (
 ) => {
     const user = await onCurrentUser();
     if (!user) return redirect("/sign-in");
-
     try {
         const create = await addPost(automationId, posts);
         if (create) return { status: 200, data: "Posts attached successfully" };
+        return { status: 404, data: "Automation not found" };
+    } catch (error) {
+        console.log(error);
+        return { status: 500, data: "Internal Server Error" };
+    }
+};
+
+export const activateAutomation = async (
+    automationId: string,
+    state: boolean,
+) => {
+    const user = await onCurrentUser();
+    if (!user) return redirect("/sign-in");
+    try {
+        const update = await updateAutomation(automationId, { active: state });
+        if (update) {
+            return {
+                status: 200,
+                data: `Automation ${state ? "activated" : "disabled"}`,
+            };
+        }
         return { status: 404, data: "Automation not found" };
     } catch (error) {
         console.log(error);
