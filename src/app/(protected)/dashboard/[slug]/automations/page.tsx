@@ -1,9 +1,16 @@
+"use client";
+
 import { Check } from "lucide-react";
 
 import AutomationList from "@/components/global/automation-list";
 import CreateAutomation from "@/components/global/create-automation";
+import { useQueryAutomations } from "@/hooks/user-queries";
 
 const AutomationPage = () => {
+  const { data } = useQueryAutomations(); 
+
+  const activeAutomations = data?.data?.filter((automation) => automation.active) || [];
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-6 gap-5">
       <div className="lg:col-span-4">
@@ -18,15 +25,21 @@ const AutomationPage = () => {
             </p>
           </div>
           <div className="flex flex-col gap-y-3">
-            {[1, 2, 3].map((item) => (
-              <div key={item} className="flex items-start justify-between">
-                <div className="flex flex-col">
-                  <h3 className="font-medium">Direct traffic towards website</h3>
-                  <p className="text-text-secondary text-sm">October 5th 2024</p>
+            {activeAutomations.length > 0 ? (
+              activeAutomations.map((automation) => (
+                <div key={automation.id} className="flex items-start justify-between">
+                  <div className="flex flex-col">
+                    <h3 className="font-medium">{automation.name}</h3>
+                    <p className="text-text-secondary text-sm">
+                      {new Date(automation.createdAt).toLocaleDateString()}
+                    </p>
+                  </div>
+                  <Check />
                 </div>
-                <Check />
-              </div>
-            ))}
+              ))
+            ) : (
+              <p className="text-text-secondary text-sm">No active automations found.</p>
+            )}
           </div>
           <CreateAutomation />
         </div>

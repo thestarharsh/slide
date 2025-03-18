@@ -3,7 +3,7 @@
 import { currentUser } from "@clerk/nextjs/server";
 import { refreshToken } from "@/lib/fetch";
 
-import { createUser, findUser } from "./queries";
+import { createSubscription, createUser, findUser } from "./queries";
 
 import { updateIntegration } from "../integrations/queries";
 
@@ -79,4 +79,24 @@ export const onUserInfo = async () => {
         console.log(error);
         return { status: 500 };
     }
+};
+
+export const onSubscribe = async (customerId: string) => {
+    const user = await currentUser();
+    if (!user) return { status: 400, message: "No User Found" };
+    try {
+        const found = await findUser(user.id);
+        if (found) {
+            const subscription = await createSubscription(
+                user.id,
+                "PRO",
+                customerId,
+            );
+            if (subscription) return { status: 200, data: subscription };
+            return { status: 404 };
+        }
+    } catch (error) {
+        console.log(error);
+        return { status: 500 };
+    }    
 };

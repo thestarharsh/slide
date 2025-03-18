@@ -43,9 +43,26 @@ const AutomationList = () => {
         >
           <div className="flex flex-col flex-1 items-start">
             <h2 className="text-xl font-semibold">{automation.name}</h2>
-            <p className="text-[#9B9CA0] text-sm font-light mb-2">
-              via comment on post
-            </p>
+            {automation?.trigger?.length > 0 && (
+              <p className="text-[#9B9CA0] text-sm font-light mb-2">
+                {automation?.trigger?.some(
+                  (t: { type: string }) => t?.type === "COMMENT"
+                ) &&
+                automation?.trigger?.some(
+                  (t: { type: string }) => t.type === "DM"
+                )
+                  ? "via comment and message"
+                  : automation?.trigger?.some(
+                      (t: { type: string }) => t.type === "COMMENT"
+                    )
+                  ? "via comment on post"
+                  : automation?.trigger?.some(
+                      (t: { type: string }) => t.type === "DM"
+                    )
+                  ? "via message"
+                  : "No Trigger Set"}
+              </p>
+            )}
             {automation.keywords.length > 0 ? (
               <div className="flex gap-x-2 flex-wrap mt-3">
                 {automation.keywords.map((keyword: Keyword, index: number) => (

@@ -29,6 +29,7 @@ export const getAutomations = async (clerkId: string) => {
                     createdAt: "asc",
                 },
                 include: {
+                    trigger: true,
                     keywords: true,
                     listeners: true,
                 },

@@ -43,3 +43,23 @@ export const createUser = async (
         },
     });
 };
+
+export const createSubscription = async (
+    clerkId: string,
+    plan?: "PRO" | "FREE",
+    customerId?: string,
+) => {
+    return await client.user.update({
+        where: {
+            clerkId,
+        },
+        data: {
+            subscription: {
+                update: {
+                    plan,
+                    customerId,
+                },
+            },
+        },
+    });
+};
