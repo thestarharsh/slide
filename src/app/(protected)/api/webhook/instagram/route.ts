@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { findAutomation } from "@/actions/automations/queries";
 import { createChatHistory, getChatHistory, getKeywordAutomation, getKeywordPost, matchKeyword, trackResponses } from "@/actions/webhook/queries";
-import { sendDM } from "@/lib/fetch";
+import { sendDM, sendPrivateMessage } from "@/lib/fetch";
 import { generateSmartAIResponse } from "@/lib/gemini";
 import { client } from "@/lib/prisma";
 
@@ -122,12 +122,12 @@ export async function POST(req: NextRequest) {
                                 return;
                             }
 
-                            const direct_message = await sendDM(
+                            const direct_message = await sendPrivateMessage(
                                 webhook_payload.entry[0].id,
-                                webhook_payload.entry[0].changes[0].value.from.id,
+                                webhook_payload.entry[0].changes[0].value.id,
                                 automation.listeners?.prompt,
-                                token,
-                            );
+                                automation.User?.integrations[0].token!
+                            );                
 
                             if (direct_message.status === 200) {
                                 const tracked = await trackResponses(automation.id, "COMMENT");
@@ -234,12 +234,12 @@ export async function POST(req: NextRequest) {
 
                         await client.$transaction([receiver, sender]);
 
-                        const direct_message = await sendDM(
+                        const direct_message = await sendPrivateMessage(
                             webhook_payload.entry[0].id,
-                            webhook_payload.entry[0].messaging[0].sender.id,
-                            smart_ai_message,
-                            automation.User.integrations[0].token!,
-                        );
+                            webhook_payload.entry[0].changes[0].value.id,
+                            automation.listeners?.prompt,
+                            automation.User?.integrations[0].token!
+                        );          
 
                         if (direct_message.status === 200) {
                             const tracked = await trackResponses(automation.id, "DM");
