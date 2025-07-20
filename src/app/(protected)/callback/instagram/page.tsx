@@ -2,15 +2,23 @@ import { onIntegrate } from "@/actions/integrations";
 import { redirect } from "next/navigation";
 
 type PageProps = {
-  searchParams: { code: string };
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
-const Page = async ({ searchParams: { code } }: PageProps) => {
+export default async function Page({ searchParams }: PageProps) {
+  const resolvedSearchParams = await searchParams;
+  
+  const code =
+    typeof resolvedSearchParams?.code === "string"
+      ? resolvedSearchParams.code.split("#_")[0]
+      : undefined;
+
   if (code) {
-    console.log(code);
-    const user = await onIntegrate(code.split("#_")[0]);
+    const user = await onIntegrate(code);
+
     if (!user) return redirect("/sign-in");
-    if (user?.status === 200) {
+
+    if (user.status === 200) {
       return redirect(
         `/dashboard/${user.data?.firstname}${user.data?.lastname}/integrations`
       );
@@ -18,6 +26,4 @@ const Page = async ({ searchParams: { code } }: PageProps) => {
   }
 
   return redirect("/sign-up");
-};
-
-export default Page;
+}

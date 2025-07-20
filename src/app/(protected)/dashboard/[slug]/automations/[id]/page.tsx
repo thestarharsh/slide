@@ -8,11 +8,13 @@ import { getAutomationInfo } from "@/actions/automations";
 import { PrefetchUserAutomation } from "@/react-query/prefetch";
 import { Warning } from "@/icons";
 
+// ✅ Next.js 15 compatible props typing - params is now a Promise
 type AutomationIdPageProps = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
+// ✅ Updated generateMetadata to await params
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const info = await getAutomationInfo(id);
   return {
@@ -21,6 +23,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 }
 
 const AutomationIdPage = async ({ params }: AutomationIdPageProps) => {
+  // ✅ Await the params promise in Next.js 15
   const { id } = await params;
   const query = new QueryClient();
   await PrefetchUserAutomation(query, id);
